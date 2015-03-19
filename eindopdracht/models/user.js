@@ -1,3 +1,5 @@
+var bcrypt   = require('bcrypt-nodejs');
+
 init = function(mongoos){
 	console.log('Initializing User database schema');
 
