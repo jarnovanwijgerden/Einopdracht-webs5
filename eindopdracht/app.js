@@ -4,11 +4,25 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var http = require('http');
+// Data Access Layer
+var mongoose = require('./dataAccess/database')();
+// /Data Access Layer
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 var app = express();
+//require('./models/user')(mongoose);
+var api = require('./API/api');
+
+
+
+var User = require('./models/user')(mongoose);
+
+
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
