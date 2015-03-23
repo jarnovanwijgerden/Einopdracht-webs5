@@ -39,6 +39,19 @@ module.exports = function(mongoose){
 		    } 
 		  }); 
 		})
+		.get(function(req, res)
+		{
+			Race.findById(req.params.id, function(err, race) {
+	        if (err)
+	        {
+	          res.send(err);
+	        }
+	        else
+	        {
+	          res.json(race);
+	        }
+	      });
+		})
 		.put(function(req, res)
 		{ 
 			Race.findById(req.params.id, function(err, race) {

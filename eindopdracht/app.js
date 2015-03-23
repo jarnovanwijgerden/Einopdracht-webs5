@@ -26,7 +26,7 @@ var routes = require('./routes/index');
 
 var users = require('./routes/users')(passport);
 var races = require('./routes/races')(mongoose);
-
+var waypoints = require('./routes/waypoints')(mongoose);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/races', races);
+app.use('/waypoints', waypoints);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
