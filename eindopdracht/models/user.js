@@ -9,7 +9,7 @@ init = function(mongoos){
 			lastName: { type: String, required: true },
 			age: { type: Number, required: true },
 			local            : {
-		        email        : String,
+		        username        : String,
 		        password     : String
 	    	}
 	    },

@@ -9,8 +9,13 @@ module.exports = function(mongoose){
 		.get(function(req, res) {
 			Race.find(function(err, races) {
 		    if (err)
-		      res.send(err);
-		    res.json(races);
+		    {
+				res.send(err);
+		    }
+		    else
+		    {
+		    	res.json(races);
+		    }
 			});
 		})
 		.post(function(req, res) {
@@ -82,5 +87,123 @@ module.exports = function(mongoose){
 			});
 		});
 
+		router.route('/:raceid/waypoint/:waypointid')
+		.delete(function(req, res) {
+
+			var raceid = req.params.raceid;
+			var waypointid = req.params.waypointid;
+			Race.findById(raceid, function(err, race) {
+			    if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+					 for (var i = 0; i<race.waypoints.length; i++) {
+				        var waypoint = race.waypoints[i];
+				        if(waypoint == waypointid)
+				        {
+				            race.waypoints.splice(i,1);
+				            break;
+				        }
+				    }
+				    race.save(function(err) {
+					    if (err)
+					    {
+					    	res.send(err);
+					    }
+					    else
+					    {
+					    	res.json(race);
+					    }
+			    	});
+				}
+			});
+		})
+		.post(function(req, res){
+
+			var raceid = req.params.raceid;
+			var waypointid = req.params.waypointid;
+
+			Race.findById(raceid, function(err, race) {
+			    if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+			    	race.waypoints.push(waypointid);
+			    	race.save(function(err) {
+					    if (err)
+					    {
+					    	res.send(err);
+					    }
+					    else
+					    {
+					    	res.json(race);
+					    }
+			    	});
+			    }
+			});
+		});
+		router.route('/:raceid/user/:userid')
+		.delete(function(req, res) {
+
+			var raceid = req.params.raceid;
+			var userid = req.params.userid;
+			Race.findById(raceid, function(err, race) {
+			    if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+					 for (var i = 0; i<race.users.length; i++) {
+				        var user = race.users[i];
+				        if(user == userid)
+				        {
+				            race.users.splice(i,1);
+				            break;
+				        }
+				    }
+				    race.save(function(err) {
+					    if (err)
+					    {
+					    	res.send(err);
+					    }
+					    else
+					    {
+					    	res.json(race);
+					    }
+			    	});
+				}
+			});
+		})
+		.post(function(req, res){
+
+			var raceid = req.params.raceid;
+			var userid = req.params.userid;
+
+			Race.findById(raceid, function(err, race) {
+			    if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+			    	race.users.push(userid);
+			    	race.save(function(err) {
+					    if (err)
+					    {
+					    	res.send(err);
+					    }
+					    else
+					    {
+					    	res.json(race);
+					    }
+			    	});
+			    }
+			});
+		});
 	return router;
 };

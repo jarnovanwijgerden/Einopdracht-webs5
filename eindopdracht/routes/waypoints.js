@@ -8,7 +8,6 @@ module.exports = function(mongoose){
   router.route('/')
     .get(function(req, res) {
 
-
       Waypoint.find(function(err, waypoint) {
         if (err)
         {

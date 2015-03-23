@@ -21,10 +21,17 @@ var WaypointSchema = require('./models/Waypoint')(mongoose);
 
 
 
-var passport = require('./config/passport')(UserSchema);
+
+
+var userSchema = mongoose.model("User");
+
+
+
+
+var passport = require('./config/passport')(userSchema);
 var routes = require('./routes/index');
 
-var users = require('./routes/users')(passport);
+var users = require('./routes/users')(passport, mongoose);
 var races = require('./routes/races')(mongoose);
 var waypoints = require('./routes/waypoints')(mongoose);
 
@@ -38,8 +45,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/races', races);
