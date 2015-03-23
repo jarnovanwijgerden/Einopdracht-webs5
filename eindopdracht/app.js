@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var http = require('http');
 // Data Access Layer
 var mongoose = require('./dataAccess/database')();
 // /Data Access Layer
@@ -12,15 +11,21 @@ var mongoose = require('./dataAccess/database')();
 
 
 var app = express();
-//require('./models/user')(mongoose);
 var api = require('./API/api');
 
-var User = require('./models/user')(mongoose);
-var passport = require('./config/passport')(User);
 
+
+var UserSchema = require('./models/user')(mongoose);
+var RaceSchema = require('./models/race')(mongoose);
+var WaypointSchema = require('./models/Waypoint')(mongoose);
+
+
+
+var passport = require('./config/passport')(UserSchema);
 var routes = require('./routes/index');
-var users = require('./routes/users')(passport);
 
+var users = require('./routes/users')(passport);
+var races = require('./routes/races')(mongoose);
 
 
 // view engine setup
@@ -37,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/races', races);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

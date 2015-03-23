@@ -9,6 +9,7 @@ module.exports = function(passport){
 			} else{
 				res.render('index', { title: 'Passport and ACL demo' });
 			}
+			res.send("Op login pagina");
 		});
 	router.route('/login')
 		.get(function(req, res){
