@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>Management</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+	<h1 style="display:block; text-align:center;" >Beheer pagina</h1>
+	<p style="display:block; text-align:center;" > U bent ingelogd als (Fullname User)</p>
+  	<p align="center">Welkom op de beheer pagina, hier kunnen races bekeken, aangemaakt, gewijzigd en verwijderd worden.</p>
+
+  	<div data-role="tabs" id="tabs">
+	  <div data-role="navbar">
+	    <ul>
+	      <li><a href="#one" data-ajax="false">Races</a></li>
+	      <li><a href="#two" data-ajax="false">Aanmaken</a></li>
+	      <li><a href="crud/read.html" data-ajax="false">Aanpassen</a></li>
+	      <li><a href="ajax-content.html" data-ajax="false">Verwijderen</a></li>
+	    </ul>
+	  </div>
+	  <div id="one" class="ui-body-d ui-content">
+	    <h1>First tab contents</h1>
+	  </div>
+	  <div id="two">
+	    <ul data-role="listview" data-inset="true">
+	        <li><a href="#">Acura</a></li>
+	        <li><a href="#">Audi</a></li>
+	        <li><a href="#">BMW</a></li>
+	        <li><a href="#">Cadillac</a></li>
+	        <li><a href="#">Ferrari</a></li>
+	    </ul>
+	  </div>
+	</div>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ init = function(mongoos){
 			middleName: {type: String, required:false},
 			lastName: { type: String, required: true },
 			age: { type: Number, required: true },
+			admin: {type: Boolean, required: true},
 			local            : {
 		        username        : String,
 		        password     : String
