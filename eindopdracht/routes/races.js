@@ -7,6 +7,7 @@ module.exports = function(mongoose){
 
 	router.route('/')
 		.get(function(req, res) {
+			res.setHeader('Access-Control-Allow-Origin','*');
 			Race.find(function(err, races) {
 		    if (err)
 		    {

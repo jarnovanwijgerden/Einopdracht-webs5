@@ -4,6 +4,7 @@
   	<title>Management</title>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="js/Management.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
@@ -22,18 +23,41 @@
 	    </ul>
 	  </div>
 	  <div id="one" class="ui-body-d ui-content">
-	    <h1>First tab contents</h1>
+	    <ul id="listview" data-role="listview" data-inset="true">
+	       
+	    </ul>
 	  </div>
 	  <div id="two">
-	    <ul data-role="listview" data-inset="true">
-	        <li><a href="#">Acura</a></li>
-	        <li><a href="#">Audi</a></li>
-	        <li><a href="#">BMW</a></li>
-	        <li><a href="#">Cadillac</a></li>
-	        <li><a href="#">Ferrari</a></li>
-	    </ul>
+	    <h1>Second tab contents</h1>
 	  </div>
 	</div>
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		//section Races Read
+		getAllRaces(function(races)
+		{
+			for(var race in races)
+			{
+				if(races[0].status == "Open")
+				{
+					$("#listview").append('<li>' + races[0].name + ' - ' + races[0].description + ' <span style="float:right;"> Waypoints : ' + races[0].waypoints.length + ' |  Status : ' + races[0].status + '</span></li>');
+				}
+			}
+			$("#listview").listview("refresh");
+		});
+		//---------------------
+		//section Races Create
+
+		
+		
+
+
+	});
+
+</script>
 
 </html>
