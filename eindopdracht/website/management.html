@@ -6,6 +6,7 @@
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="js/Management.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -22,13 +23,41 @@
 	      <li><a href="ajax-content.html" data-ajax="false">Verwijderen</a></li>
 	    </ul>
 	  </div>
-	  <div id="one" class="ui-body-d ui-content">
+	  <div id="two" class="ui-body-d ui-content">
 	    <ul id="listview" data-role="listview" data-inset="true">
 	       
 	    </ul>
 	  </div>
-	  <div id="two">
-	    <h1>Second tab contents</h1>
+	  <div id="one">
+	    <p><input type="text" name="name" value="" placeholder="Naam"></p>
+        <p><input type="text" name="description" value="" placeholder="Beschrijving"></p>
+        <select>
+        	<option value="Open">Open</option>
+        	<option value="Closed">Closed</option>
+        </select>
+        <h3 style="text-align:center; background-color: #D0F5F3"> Huidige Waypoints</h3>
+
+
+        <ul id="waypoints" data-role="listview" data-inset="true">
+	       <li>Waypoint 1 test</li>
+	       <li>Waypoint 2 test</li>
+	    </ul>
+	   	<h3 style="text-align:center; background-color: #D0F5F3"> Zoeken naar Waypoints</h3>
+
+	   	<p>
+	   		<input type="text" name="name" value="" placeholder="Zoekterm">
+	   		<p class="submit"><input type="submit" name="commit" value="Zoeken naar waypoints"></p>
+
+	   	</p>
+
+
+	   	<h3 style="text-align:center; background-color: #D0F5F3"> Resultaten</h3>
+        <ul id="waypoints" data-role="listview" data-inset="true">
+	       <li>Zoek waypoint 1</li>
+	       <li>Zoek waypoint 2</li>
+	    </ul>
+
+        <p class="submit"><input type="submit" name="commit" value="Voeg race toe"></p>
 	  </div>
 	</div>
 </body>
