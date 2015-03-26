@@ -18,7 +18,10 @@
 	<select id="races">
 	    <option value="standaart" disabled="disabled" selected="selected">Kies een race uit.</option>
 	</select>
+	<button id="btngo" style="width:10%">Toon details</button>
+
 	</div>
+
 
 </body>
 
@@ -37,7 +40,13 @@
 					}
 				}
 			});
+
+			$("#btngo").on("click", function()
+            {
+            	alert("HOi");
+            });
 		});
+
 </script>
 
 </html>
