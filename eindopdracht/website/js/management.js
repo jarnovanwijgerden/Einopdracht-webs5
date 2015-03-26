@@ -6,3 +6,10 @@
 			callback(response);
 		});
 	}
+	function getJSONFromURL(url, callback)
+	{
+		$.get(url, function(response)
+		{
+			callback(response);
+		});
+	}
