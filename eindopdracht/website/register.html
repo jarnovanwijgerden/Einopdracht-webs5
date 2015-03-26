@@ -38,18 +38,25 @@
       $("#btnregister").on("click", function()
       {
 
-          var firstname = $("#firstname").val();
-          var middleName = $("#middleName").val();
-          var lastName = $("#lastName").val();
-          var age = $("#age").val();
-          var username = $("#username").val();
-          var password = $("#password").val();
+          var _firstname = $("#firstname").val();
+          var _middleName = $("#middleName").val();
+          var _lastName = $("#lastName").val();
+          var _age = $("#age").val();
+          var _username = $("#username").val();
+          var _password = $("#password").val();
 
 
-          $.post("users/signup", { firstName: firstname,  middleName: middleName,  lastName: lastName,  age: age,  username: username, password: password,}, function(response)
+          $.post("users/signup", { firstName: _firstname,  middleName: _middleName,  lastName: _lastName,  age: _age,  username: _username, password: _password, admin: false}, function(response)
           {
-              alert(JSON.stringify(response));
-              //$( ".result" ).html( data );
+            if(response._id != null)
+            {
+              localStorage.setItem("user", JSON.stringify(response)); 
+              window.location = "index";
+            }
+            else
+            {
+              alert("Er ging iets fout, vul alles goed in!");
+            }
           });
       });
  </script>

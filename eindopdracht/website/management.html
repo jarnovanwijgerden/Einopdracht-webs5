@@ -15,7 +15,7 @@
 <body>
 
 	<h1 style="display:block; text-align:center;" >Beheer pagina</h1>
-	<p style="display:block; text-align:center;" > U bent ingelogd als (Fullname User)</p>
+	<p style="display:block; text-align:center;" id="login" > U bent ingelogd als </p>
   	<p align="center">Welkom op de beheer pagina, hier kunnen races bekeken, aangemaakt, gewijzigd en verwijderd worden.</p>
 
   	<div data-role="tabs" id="tabs">
@@ -78,6 +78,12 @@
 
 	$(document).ready(function()
 	{
+
+		var user = localStorage.getItem("user");
+		if(user != null)
+		{
+			$("#login").append(user.fullName);
+		}
 		//section Races Read
 		getAllRaces(function(races)
 		{

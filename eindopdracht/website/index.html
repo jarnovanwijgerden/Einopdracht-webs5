@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 <head>
   	<title>Inschrijf pagina</title>
@@ -10,7 +10,7 @@
 <body>
 
 	<h1 style="display:block; text-align:center;" >Inschrijf pagina</h1>
-	<p style="display:block; text-align:center;" > U bent ingelogd als (Fullname User)</p>
+	<p id="login" style="display:block; text-align:center;" > U bent ingelogd als </p>
   	<p align="center">Welkom op de Inschrijf pagina, hier kunt u uwzelf inschrijven voor een race en toevoegen aan waypoints</p>
 
 	<div align="center">
@@ -29,6 +29,12 @@
 
 		$(document).ready(function()
 		{
+
+			//check for user login
+			var user = JSON.parse(localStorage.getItem("user"));
+
+			if(user != null)
+				$("#login").append(user.fullName);
 			//section Races Read
 			getAllRaces(function(races)
 			{
@@ -40,8 +46,6 @@
 					}
 				}
 			});
-
-
 
 			$("#btngo").on("click", function()
             {
