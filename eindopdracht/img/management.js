@@ -1,7 +1,7 @@
 
 	function getAllRaces(callback)
 	{
-		$.get("http://localhost:3000/races", function(response)
+		$.get("races", function(response)
 		{
 			callback(response);
 		});
@@ -71,7 +71,7 @@
 		var _status = $("#racestatus").val();
 		var _startdatum = $("#racestartdate").val();
 		var stringify = JSON.stringify(_waypoints);
-		var URI = "http://localhost:3000/races";
+		var URI = "races";
 		console.log("Dit is de stringify " + stringify);
 		alert(_status); 
 		$.post(URI, { name: _name, description:_description, startdatum: _startdatum, status: _status, way: stringify}, function(response)
