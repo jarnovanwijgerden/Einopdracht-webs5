@@ -46,16 +46,22 @@ module.exports = function(mongoose){
 		  }); 
 		})
 		.get(function(req, res)
-		{
+		{     
 			Race.findById(req.params.id, function(err, race) {
-	        if (err)
-	        {
-	          res.send(err);
-	        }
-	        else
-	        {
-	          res.json(race);
-	        }
+			race.waypoints.push({placeid: "ChI72o-0Zf1xkcRdF_M2RNO_KI", name: "Servex Geldermalsen", latitude: 51.882394, longitude: 5.286363});
+			race.save(function(error)
+			{
+				console.log("Is er een error " + error);
+
+					if (err)
+			        {
+			          res.send(err);
+			        }
+			        else
+			        {
+			          res.json(race);
+			        }
+			});
 	      });
 		})
 		.put(function(req, res)
