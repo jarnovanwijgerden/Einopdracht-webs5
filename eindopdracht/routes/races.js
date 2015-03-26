@@ -21,6 +21,12 @@ module.exports = function(mongoose){
 		})
 		.post(function(req, res) {
 			var _race = new Race(req.body);
+			var waypoints = JSON.parse(req.body.way);
+			for(var index in waypoints)
+			{
+				var way = waypoints[index];
+				_race.waypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude});
+			}
 			_race.save(function(err) {
 			    if (err)
 			    {

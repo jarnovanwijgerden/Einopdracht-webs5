@@ -96,18 +96,22 @@
 		//section Races Create
 		getGoogleMapsGeo();
 		
-
-
 		$(document.body).on('click', '#resultpoints li a' ,function(){
-			alert("KLIK OP EEN A");
+
+			var name = $(this).text();
+			var placeid = $(this).attr("place-id");
+			var lng = $(this).attr("lng");
+			var lat = $(this).attr("lat");
+
+			$("#waypoints").append('<li><a  lat="' + lat+ '" lng="' + lng+ '" place-id="' + placeid + '">' + name + '</a></li>');
+			$("#waypoints").listview("refresh");
+			
 		});
-
-
-	$("#saverace").on("click", function()
-	{
-		saveRace();
-	});
-
+		
+		$("#saverace").on("click", function()
+		{
+			saveRace();
+		});
 
 		});
 
