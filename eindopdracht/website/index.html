@@ -36,14 +36,21 @@
 				{
 					if(races[race].status == "Open")
 					{
-						$("#races").append('<option value="' + races[race].id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
+						$("#races").append('<option value="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
 					}
 				}
 			});
 
+
+
 			$("#btngo").on("click", function()
             {
-            	alert("HOi");
+            	var id = $("#races").val();
+
+            	getRaceById(id,function(response)
+				{
+					alert(JSON.stringify(response));	
+				});
             });
 		});
 
