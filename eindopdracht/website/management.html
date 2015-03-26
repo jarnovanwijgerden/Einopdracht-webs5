@@ -5,15 +5,12 @@
 	
 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<script src="js/Management.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-	  <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -38,6 +35,7 @@
 	  <div id="one">
 	    <p><input type="text" name="name" value="" placeholder="Naam"></p>
         <p><input type="text" name="description" value="" placeholder="Beschrijving"></p>
+         <p><input type="text" name="description" value="" placeholder="Start datum (YYYY-mm-dd)"></p>
         <select>
         	<option value="Open">Open</option>
         	<option value="Closed">Closed</option>
@@ -46,8 +44,7 @@
 
 
         <ul id="waypoints" data-role="listview" data-inset="true">
-	       <li>Waypoint 1 test</li>
-	       <li>Waypoint 2 test</li>
+	      
 	    </ul>
 	   	<h3 style="text-align:center; background-color: #D0F5F3"> Zoeken naar Waypoints</h3>
 
@@ -58,8 +55,6 @@
 
 	   	<h3 style="text-align:center; background-color: #D0F5F3"> Resultaten</h3>
         <ul id="resultpoints" data-role="listview" data-inset="true">
-	       <li>Zoek waypoint 1</li>
-	       <li>Zoek waypoint 2</li>
 	    </ul>
 
         <p class="submit"><input type="submit" name="commit" value="Voeg race toe"></p>
@@ -81,9 +76,9 @@
 		{
 			for(var race in races)
 			{
-				if(races[0].status == "Open")
+				if(races[race].status == "Open")
 				{
-					$("#listview").append('<li>' + races[0].name + ' - ' + races[0].description + ' <span style="float:right;"> Waypoints : ' + races[0].waypoints.length + ' |  Status : ' + races[0].status + '</span></li>');
+					$("#listview").append('<li>' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
 				}
 			}
 			$("#listview").listview("refresh");
@@ -110,12 +105,15 @@
   		}
   		function loadWaypoints(GEO)
   		{
+  			alert(GEO);
   			$("#resultpoints").empty();
   			var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location=51.892747,%205.293556&radius=5000&type=cafe";
-
   			getJSONFromURL(URI, function(response)
   			{
-  				alert(response);
+  				for(var race in response.results)
+  				{
+					$("#resultpoints").append('<li><a data-id="' + response.results[race].place_id + '">' + response.results[race].name + '</a></li>');
+  				}
   				$("#resultpoints").listview("refresh");
   			});
   		}
