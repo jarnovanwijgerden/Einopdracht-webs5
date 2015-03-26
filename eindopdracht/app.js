@@ -17,23 +17,16 @@ var api = require('./API/api');
 
 var UserSchema = require('./models/user')(mongoose);
 var RaceSchema = require('./models/race')(mongoose);
-var WaypointSchema = require('./models/Waypoint')(mongoose);
-
-
-
+//var WaypointSchema = require('./models/Waypoint')(mongoose);
 
 
 var userSchema = mongoose.model("User");
-
-
-
-
 var passport = require('./config/passport')(userSchema);
 var routes = require('./routes/index');
 
 var users = require('./routes/users')(passport, mongoose);
 var races = require('./routes/races')(mongoose);
-var waypoints = require('./routes/waypoints')(mongoose);
+//var waypoints = require('./routes/waypoints')(mongoose);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/races', races);
-app.use('/waypoints', waypoints);
+//app.use('/waypoints', waypoints);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

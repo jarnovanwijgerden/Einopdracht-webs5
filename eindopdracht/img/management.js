@@ -34,19 +34,35 @@
 	{
 		
 		$("#resultpoints").empty();
-
-
-			latitude: {type:Number, required:true },
-			longitude: {type:Number, required:true },
-
+	
 		var geo = GEO.lat() + "," + GEO.lng();
 		var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location="+ geo + "&radius=5000&type=cafe";
 		getJSONFromURL(URI, function(response)
 		{
-			for(var race in response.results)
+
+			for(var index in response.results)
 			{
-				$("#resultpoints").append('<li><a name="' + response.results[race].name + '" place-id="' + response.results[race].place_id + '">' + response.results[race].name + '</a></li>');
+				var race = response.results[index];
+				$("#resultpoints").append('<li><a long="' + race.geometry.location.lng + '" lat="' + race.geometry.location.lat + '" place-id="' + race.place_id + '">' + race.name + '</a></li>');
 			}
 			$("#resultpoints").listview("refresh");
+		});
+	}
+
+	function saveRace()
+	{
+		alert("Race word opgeslagen");
+		var _name = $("#racename").val();
+		var _description = $("#racedescrip").val();
+		var _status = $("#racestatus").val();
+		var _startdatum = $("#racestartdate").val();
+
+		var URI = "http://localhost:3000/races";
+
+		alert(_status);
+
+		$.post(URI, { name: _name, description:_description, startdatum: _startdatum, status: _status}, function(response)
+		{
+			alert(JSON.stringify(response));
 		});
 	}
