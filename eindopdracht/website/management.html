@@ -62,9 +62,16 @@
 
 	  <div id="four">
 	  	<h3>Race verwijderen</h3>
-
+	  	<ul id="listviewremove" data-role="listview" data-inset="true">
+	       
+	    </ul>
 	  </div>
 	</div>
+
+
+	<div id="dialog-confirm">Wanneer je de race verwijderd, zullen alle waypoints met daarbij de bijbehorende users verwijderd worden</div>
+
+
 </body>
 
 <script type="text/javascript">
@@ -79,44 +86,16 @@
 				if(races[race].status == "Open")
 				{
 					$("#listview").append('<li>' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
+					$("#listviewremove").append('<li><a>' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
 				}
 			}
 			$("#listview").listview("refresh");
+			$("#listviewremove").listview("refresh");
 		});
 		//---------------------
 		//section Races Create
 		getGoogleMapsGeo();
-		function getGoogleMapsGeo()
-		{
-			//var searchBox = new google.maps.places.SearchBox(input);
-			var input = /** @type {HTMLInputElement} */(
-	      	document.getElementById('pac-input'));
-	  		var searchBox = new google.maps.places.SearchBox(
-	    	/** @type {HTMLInputElement} */(input));
-	  		google.maps.event.addListener(searchBox, 'places_changed', function() {
-
-	  			  var places = searchBox.getPlaces();
-	  			  if (places.length == 0) {
-				      return;
-				  }
-				  var place = places[0];
-				  loadWaypoints(place.geometry.location);
-			});
-  		}
-  		function loadWaypoints(GEO)
-  		{
-  			alert(GEO);
-  			$("#resultpoints").empty();
-  			var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location=51.892747,%205.293556&radius=5000&type=cafe";
-  			getJSONFromURL(URI, function(response)
-  			{
-  				for(var race in response.results)
-  				{
-					$("#resultpoints").append('<li><a data-id="' + response.results[race].place_id + '">' + response.results[race].name + '</a></li>');
-  				}
-  				$("#resultpoints").listview("refresh");
-  			});
-  		}
+		
 		});
 
 </script>

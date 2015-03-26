@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/js/:jsfile', function(req, res, next) {
 
 	var file = req.params.jsfile;
-	fs.readFile('./website/js/'+file, function (err, js) {
+	fs.readFile('./img/'+file, function (err, js) {
 
 		if(err)
 		{
