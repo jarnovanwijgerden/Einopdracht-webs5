@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>Inschrijf pagina</title>
+
+  	        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="js/Management.js"></script>
+	  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<h1 style="display:block; text-align:center;" >Inschrijf pagina</h1>
+	<p style="display:block; text-align:center;" > U bent ingelogd als (Fullname User)</p>
+  	<p align="center">Welkom op de Inschrijf pagina, hier kunt u uwzelf inschrijven voor een race en toevoegen aan waypoints</p>
+
+	<div align="center">
+  	<label for="races" >race:</label>
+	<select id="races">
+	    <option value="standaart" disabled="disabled" selected="selected">Kies een race uit.</option>
+	</select>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+
+		$(document).ready(function()
+		{
+			//section Races Read
+			getAllRaces(function(races)
+			{
+				for(var race in races)
+				{
+					if(races[race].status == "Open")
+					{
+						$("#races").append('<option value="' + races[race].id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
+					}
+				}
+			});
+		});
+</script>
+
+</html>
