@@ -58,6 +58,48 @@ router.get('/management', function(req, res) {
 });
 
 
+
+router.get('/login', function(req, res) {
+	fs.readFile('./website/login.html', function (err, html) {
+		if(err)
+		{
+			throw err;
+		}
+		else
+		{
+			res.writeHeader(200, {"Content-Type": "text/html"});  
+        	res.write(html);  
+        	res.end();
+		}
+	});
+});
+
+
+
+router.get('/register', function(req, res) {
+	fs.readFile('./website/register.html', function (err, html) {
+		if(err)
+		{
+			throw err;
+		}
+		else
+		{
+			res.writeHeader(200, {"Content-Type": "text/html"});  
+        	res.write(html);  
+        	res.end();
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
 router.get('/index', function(req, res) {
 	fs.readFile('./website/index.html', function (err, html) {
 		if(err)

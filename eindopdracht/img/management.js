@@ -36,6 +36,9 @@
 		$("#resultpoints").empty();
 		var geo = GEO.lat() + "," + GEO.lng();
 		var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location="+ geo + "&radius=5000&type=cafe";
+
+
+		
 		getJSONFromURL(URI, function(response)
 		{
 			for(var race in response.results)
