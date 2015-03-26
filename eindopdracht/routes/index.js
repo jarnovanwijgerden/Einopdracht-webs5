@@ -58,7 +58,7 @@ router.get('/management', function(req, res) {
 });
 
 
-router.get('/ìndex', function(req, res) {
+router.get('/index', function(req, res) {
 	fs.readFile('./website/index.html', function (err, html) {
 		if(err)
 		{
