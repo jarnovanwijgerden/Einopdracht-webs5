@@ -1,8 +1,7 @@
 
 <script type="text/javascript">
-
 	var user = localStorage.getItem("user");
-	if(user == null)
+	if(user == null || user.admin)
 	{
 		window.stop();
 	}
