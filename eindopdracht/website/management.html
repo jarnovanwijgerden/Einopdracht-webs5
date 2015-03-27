@@ -1,9 +1,10 @@
 
 <script type="text/javascript">
-	var user = localStorage.getItem("user");
-	if(user == null || user.admin)
+	var user = JSON.parse(localStorage.getItem("user"));
+	if(user == null || user.admin == false)
 	{
 		window.stop();
+		window.history.go(-1);
 	}
 </script>
 
@@ -26,6 +27,8 @@
 	<body>
 
 	<h1 style="display:block; text-align:center;" >Beheer pagina</h1>
+	<p align="center">Klik <a href="index">hier</a> om terug te gaan naar index.</p>
+
   	<p align="center">Welkom op de beheer pagina, hier kunnen races bekeken, aangemaakt, gewijzigd en verwijderd worden.</p>
 
   	<div data-role="tabs" id="tabs">
