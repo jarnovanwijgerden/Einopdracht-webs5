@@ -116,6 +116,14 @@
 					{
 
 						var waypointid = $(this).attr("id");
+						var raceid = $("#races").val();
+						var userid = user._id;
+
+						addUserToWaypoint(raceid,waypointid, userid, function(data)
+						{
+
+						});
+
 
 					}
 					else
