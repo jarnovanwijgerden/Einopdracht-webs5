@@ -28,7 +28,7 @@
 	    <ul>
 	      <li><a href="#one" data-ajax="false">Races</a></li>
 	      <li><a href="#two" data-ajax="false">Aanmaken</a></li>
-	      <li><a href="crud/read.html" data-ajax="false">Aanpassen</a></li>
+	      <li><a href="#three" data-ajax="false">Aanpassen</a></li>
 	      <li><a href="#four" data-ajax="false">Verwijderen</a></li>
 	    </ul>
 	  </div>
@@ -66,11 +66,51 @@
         <p class="submit"><input id="saverace" type="submit" name="commit" value="Voeg race toe"></p>
 	  </div>
 
+
+	  <div id="three">
+	  		<h3>Race aanpassen</h3>
+	  		<select id="races"  style="width: 100%;">
+			    <option value="standaart" disabled="disabled" selected="selected">Kies een race uit.</option>
+			</select>
+
+
+
+	     <p><input type="text" id="editracename" name="name" value="" placeholder="Naam"></p>
+        <p><input type="text" id="editracedescrip" name="description" value="" placeholder="Beschrijving"></p>
+         <p><input type="text" id="editracestartdate" name="startdate" value="" placeholder="Start datum (YYYY-mm-dd)"></p>
+        <select id="editracestatus" style="width: 100%;">
+        	<option value="Open">Open</option>
+        	<option value="Closed">Closed</option>
+        </select>
+        <h3 style="text-align:center; background-color: #D0F5F3"> Huidige Waypoints</h3>
+
+
+        <ul id="editwaypoints" data-role="listview" data-inset="true">
+	      
+	    </ul>
+	   	<h3 style="text-align:center; background-color: #D0F5F3"> Zoeken naar Waypoints</h3>
+
+	   	<p>
+	   		<input type="text" id="pac-input" name="name" value="" placeholder="Zoekterm">
+	   	</p>
+
+
+	   	<h3 style="text-align:center; background-color: #D0F5F3"> Resultaten</h3>
+        <ul id="editresultpoints" data-role="listview" data-inset="true">
+	    </ul>
+
+        <p class="submit"><input id="editrace" type="submit" name="commit" value="Pas race aan"></p>
+
+
+
+
+	  </div>
 	  <div id="four">
 	  	<h3>Verwijder een race</h3>
 	    <ul id="listviewremove"   data-role="listview" data-inset="true">
 	       
 	    </ul>
+
 	  </div>
 	</div>
 
@@ -99,7 +139,9 @@
 				{
 					$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
 					$("#listviewremove").append('<li data-icon="false"><a class="' + races[race]._id + '" id="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
+					$("#races").append('<option value="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
 				}
+
 			}
 			// $("#listview").listview("refresh");
 			// $("#listviewremove").listview("refresh");
@@ -121,6 +163,9 @@
 		{
 			saveRace();
 		});
+
+
+		//section Races Delete
 		$(document.body).on('click', '#listviewremove li a' ,function(){
 
 			var raceid = $(this).attr("id");
@@ -137,30 +182,29 @@
 				}
 			});
 		});
-		function fnOpenNormalDialog(callback) {
-	    $("#dialog-confirm").html("Verwijderen Race");
-	    // Define the Dialog and its properties.
-	    $("#dialog-confirm").dialog({
-		        resizable: false,
-		        modal: true,
-		        title: "Weet u zeker dat je deze race wilt verwijderen",
-		        height: 250,
-		        width: 400,
-		        buttons: {
-		            "Yes": function () {
-		                $(this).dialog('close');
-		                callback(true);
-		            },
-		                "No": function () {
-		                $(this).dialog('close');
-		                callback(false);
-		            }
-		        }
-		    });
-		}
 
+		//section Races Edit
+		$("#races").on("change", function()
+		{
+			
+			var raceid = $("#races").val();
+			getRaceById(raceid, function(race)
+			{
 
-		
+				$("#editracename").val(race.name);
+				$("#editracedescrip").val(race.description);
+				$("#editracestartdate").val(race.startdatum);
+				$("#editracestatus").val(race.status);
+
+				for(var index in race.waypoints)
+				{
+					var waypoint = race.waypoints[index];
+					alert(waypoint.name);
+				}
+
+			});
+
+		});
 		});
 
 </script>

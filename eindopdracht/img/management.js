@@ -6,6 +6,13 @@
 			callback(response);
 		});
 	}
+	function getRaceById(id, callback)
+	{
+		$.get("races/" + id, function(response)
+		{
+			callback(response);
+		});
+	}
 	function getJSONFromURL(url, callback)
 	{
 		$.get(url, function(response)
@@ -36,7 +43,6 @@
 	}
 	function loadWaypoints(GEO)
 	{
-		
 		$("#resultpoints").empty();
 		var geo = GEO.lat() + "," + GEO.lng();
 		var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location="+ geo + "&radius=5000&type=cafe";
@@ -100,3 +106,24 @@
 			    }
 			});
 	}
+	function fnOpenNormalDialog(callback) {
+	    $("#dialog-confirm").html("Verwijderen Race");
+	    // Define the Dialog and its properties.
+	    $("#dialog-confirm").dialog({
+		        resizable: false,
+		        modal: true,
+		        title: "Weet u zeker dat je deze race wilt verwijderen",
+		        height: 250,
+		        width: 400,
+		        buttons: {
+		            "Yes": function () {
+		                $(this).dialog('close');
+		                callback(true);
+		            },
+		                "No": function () {
+		                $(this).dialog('close');
+		                callback(false);
+		            }
+		        }
+		    });
+		}
