@@ -6,8 +6,13 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+
 	<script src="js/Management.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 	<link rel="stylesheet" href="css/style.css">
@@ -27,16 +32,17 @@
 	      <li><a href="#four" data-ajax="false">Verwijderen</a></li>
 	    </ul>
 	  </div>
-	  <div id="two" class="ui-body-d ui-content">
+	  <div id="one" class="ui-body-d ui-content">
+	  	<h3>Lijst met alle races</h3>
 	    <ul id="listview" data-role="listview" data-inset="true">
 	       
 	    </ul>
 	  </div>
-	  <div id="one">
+	  <div id="two">
 	    <p><input type="text" id="racename" name="name" value="" placeholder="Naam"></p>
         <p><input type="text" id="racedescrip" name="description" value="" placeholder="Beschrijving"></p>
          <p><input type="text" id="racestartdate" name="startdate" value="" placeholder="Start datum (YYYY-mm-dd)"></p>
-        <select id="racestatus">
+        <select id="racestatus" style="width: 100%;">
         	<option value="Open">Open</option>
         	<option value="Closed">Closed</option>
         </select>
@@ -61,15 +67,15 @@
 	  </div>
 
 	  <div id="four">
-	  	<h3>Race verwijderen</h3>
-	  	<ul id="listviewremove" data-role="listview" data-inset="true">
+	  	<h3>Verwijder een race</h3>
+	    <ul id="listviewremove"   data-role="listview" data-inset="true">
 	       
 	    </ul>
 	  </div>
 	</div>
 
 
-	<div id="dialog-confirm">Wanneer je de race verwijderd, zullen alle waypoints met daarbij de bijbehorende users verwijderd worden</div>
+	<div id="dialog-confirm"></div>
 
 
 </body>
@@ -78,7 +84,7 @@
 
 	$(document).ready(function()
 	{
-
+		$("#tabs").tabs();
 		var user = localStorage.getItem("user");
 		if(user != null)
 		{
@@ -91,12 +97,12 @@
 			{
 				if(races[race].status == "Open")
 				{
-					$("#listview").append('<li>' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
-					$("#listviewremove").append('<li><a>' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
+					$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
+					$("#listviewremove").append('<li data-icon="false"><a class="' + races[race]._id + '" id="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
 				}
 			}
-			$("#listview").listview("refresh");
-			$("#listviewremove").listview("refresh");
+			// $("#listview").listview("refresh");
+			// $("#listviewremove").listview("refresh");
 		});
 		//---------------------
 		//section Races Create
@@ -108,17 +114,53 @@
 			var placeid = $(this).attr("place-id");
 			var lng = $(this).attr("lng");
 			var lat = $(this).attr("lat");
-
 			$("#waypoints").append('<li><a  lat="' + lat+ '" lng="' + lng+ '" place-id="' + placeid + '">' + name + '</a></li>');
-			$("#waypoints").listview("refresh");
-			
+			//$("#waypoints").listview("refresh");
 		});
-		
 		$("#saverace").on("click", function()
 		{
 			saveRace();
 		});
+		$(document.body).on('click', '#listviewremove li a' ,function(){
 
+			var raceid = $(this).attr("id");
+			fnOpenNormalDialog(function(response)
+			{
+				if(response)
+				{
+					deleteRaceByID(raceid, function(response)
+					{
+						alert("Verwijderd");
+						$('.'+raceid).remove();
+						reloadPage();
+					});
+				}
+			});
+		});
+		function fnOpenNormalDialog(callback) {
+	    $("#dialog-confirm").html("Verwijderen Race");
+	    // Define the Dialog and its properties.
+	    $("#dialog-confirm").dialog({
+		        resizable: false,
+		        modal: true,
+		        title: "Weet u zeker dat je deze race wilt verwijderen",
+		        height: 250,
+		        width: 400,
+		        buttons: {
+		            "Yes": function () {
+		                $(this).dialog('close');
+		                callback(true);
+		            },
+		                "No": function () {
+		                $(this).dialog('close');
+		                callback(false);
+		            }
+		        }
+		    });
+		}
+
+
+		
 		});
 
 </script>
