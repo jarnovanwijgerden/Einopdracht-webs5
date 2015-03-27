@@ -10,7 +10,8 @@
 <body>
 
 	<div align="right">
-	<button id="btnlogout" style="width:10%; margin-top:-10%">Uitloggen</button>
+		<button id="btnmanagemant" style="width:10%; margin-top:-10%">managemant</button>
+		<button id="btnlogout" style="width:10%; margin-top:-10%">Uitloggen</button>
 	</div>
 
 	<h1 style="display:block; text-align:center;" >Inschrijf pagina</h1>
@@ -59,6 +60,11 @@
         	{
         		localStorage.user = null
         		window.location = "login";
+			});
+
+			$("#btnmanagemant").on("click", function()
+        	{
+        		window.location = "management";
 			});
 
 			if(user != null)
