@@ -47,7 +47,6 @@ module.exports = function(mongoose){
 		    }
 		    else
 		    {
-		    	console.log("In de geen error");
 		    	res.send("ok");
 		    } 
 		  }); 
@@ -58,16 +57,14 @@ module.exports = function(mongoose){
 			//race.waypoints.push({placeid: "ChI72o-0Zf1xkcRdF_M2RNO_KI", name: "Servex Geldermalsen", latitude: 51.882394, longitude: 5.286363});
 			race.save(function(error)
 			{
-				console.log("Is er een error " + error);
-
-					if (err)
-			        {
-			          res.send(err);
-			        }
-			        else
-			        {
-			          res.json(race);
-			        }
+				if (err)
+		        {
+		          res.send(err);
+		        }
+		        else
+		        {
+		          res.json(race);
+		        }
 			});
 	      });
 		})
@@ -168,6 +165,41 @@ module.exports = function(mongoose){
 			    }
 			});
 		});
+
+		router.route('/:raceid/waypoint/:waypointid/user/:userid')
+		.post(function(req, res){
+			var raceid = req.params.raceid;
+			var userid = req.params.userid;
+			var waypointid = req.params.waypointid;
+			Race.findById(raceid, function(err, race) {
+			    if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+			    	for (var i = 0; i<race.waypoints.length; i++) {
+				        var waypoint = race.waypoints[i];
+				        if(waypoint._id == waypointid)
+				        {
+				        	waypoint.users.push(userid);
+				        	race.save(function(err) {
+							    if (err)
+							    {
+							    	res.send(err);
+							    }
+							    else
+							    {
+							    	res.json(race);
+							    }
+				    		});	
+				            break;
+				        }
+				    }
+			    }
+			});
+		});
+
 		router.route('/:raceid/user/:userid')
 		.delete(function(req, res) {
 

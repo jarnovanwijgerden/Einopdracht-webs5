@@ -168,8 +168,6 @@
             }
         });
 	}
-
-
 	function deleteRaceByID(raceid, callback)
 	{
 		var URI = "races/"+raceid;
