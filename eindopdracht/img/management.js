@@ -30,6 +30,10 @@
 			  loadWaypoints(place.geometry.location);
 		});
 	}
+	function reloadPage()
+	{
+		location.reload();
+	}
 	function loadWaypoints(GEO)
 	{
 		
@@ -80,6 +84,7 @@
 			} else {
 				alert("Er ging iets fout");
 			}
+			reloadPage();
 		});
 
 	}
