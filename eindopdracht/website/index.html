@@ -19,7 +19,16 @@
 	    <option value="standaart" disabled="disabled" selected="selected">Kies een race uit.</option>
 	</select>
 	<button id="btngo" style="width:10%">Toon details</button>
+	</div>
 
+	<div>
+		<ul id = "waypoints">
+	    	<li style="list-style-type:none">
+	        	<ul id = "users" >
+
+	        	</ul>
+			</li>
+		</ul>
 	</div>
 
 
@@ -50,12 +59,31 @@
 			$("#btngo").on("click", function()
             {
             	var id = $("#races").val();
+            	$("#waypoints").empty();
+            	$("#users").empty();
 
             	getRaceById(id,function(response)
 				{
-					alert(JSON.stringify(response));	
+					//alert(JSON.stringify(response.waypoints));
+					for(var point in response.waypoints)
+					{
+						var waypoint = response.waypoints[point];
+						//alert(waypoint.name);
+						$("#waypoints").append('<li> '+ waypoint.name + '</li>');
+
+						for(var user in waypoint.users)
+						{
+							var user = waypoint.users[user];
+							//alert(waypoint.name);
+							$("#users").append('<li> '+ user.name + '</li>');
+						}	
+
+					}	
+
 				});
             });
+
+
 		});
 
 </script>
