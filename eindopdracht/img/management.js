@@ -45,7 +45,7 @@
 				
 				$("#resultpoints").append('<li><a  lat="' + lat+ '" lng="' + lng+ '" place-id="' + response.results[race].place_id + '">' + response.results[race].name + '</a></li>');
 			}
-			$("#resultpoints").listview("refresh");
+			//$("#resultpoints").listview("refresh");
 		});
 	}
 
@@ -74,7 +74,24 @@
 		var URI = "races";
 		$.post(URI, { name: _name, description:_description, startdatum: _startdatum, status: _status, way: stringify}, function(response)
 		{
-			alert(JSON.stringify(response));
+			if(response._id != null)
+			{
+				alert("Race toegevoegd");
+			} else {
+				alert("Er ging iets fout");
+			}
 		});
 
+	}
+
+	function deleteRaceByID(raceid, callback)
+	{
+		var URI = "races/"+raceid;
+		$.ajax({
+			    url: URI,
+			    type: 'DELETE',
+			    success: function(result) {
+			        callback(result);
+			    }
+			});
 	}

@@ -41,12 +41,13 @@ module.exports = function(mongoose){
 	router.route('/:id')
 		.delete(function(req, res) {
 		  Race.findByIdAndRemove(req.params.id, function(err) {
-		    if ("ERROR " + err)
+		    if (err)
 		    {
 		    	res.send(err);
 		    }
 		    else
 		    {
+		    	console.log("In de geen error");
 		    	res.send("ok");
 		    } 
 		  }); 

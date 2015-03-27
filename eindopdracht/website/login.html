@@ -46,7 +46,6 @@
 
       $("#btnlogin").on("click", function()
       {
-
         var _username = $("#login").val();
         var _password = $("#password").val();
        $.post("users/login", { username: _username, password: _password }, function(response)
