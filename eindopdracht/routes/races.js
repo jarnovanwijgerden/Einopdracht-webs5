@@ -86,7 +86,15 @@ module.exports = function(mongoose){
 			    	race.startdatum = _race.startdatum;
 			    	race.status = _race.status;
 			    	race.users = _race.users;
-			    	race.waypoints = _race.waypoints;
+			 
+
+			  		var waypoints = JSON.parse(req.body.way);
+			  		race.waypoints = [];
+					for(var index in waypoints)
+					{
+						var way = waypoints[index];
+						race.waypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude});
+					}
 			    	race.save(function(err) {
 				    if (err)
 				    {
