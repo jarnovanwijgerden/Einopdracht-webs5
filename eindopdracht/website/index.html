@@ -28,16 +28,12 @@
 	</div>
 
 
-
-	<div>
 		<ul id = "waypoints">
-	    	<li style="list-style-type:none">
-	        	<ul id = "users" >
-
-	        	</ul>
-			</li>
+	   
 		</ul>
-	</div>
+</ul>
+
+
 
 
 </body>
@@ -94,21 +90,51 @@
 					{
 						var waypoint = response.waypoints[point];
 				
-						$("#waypoints").append('<li id= " '+ waypoint.placeid +' ">  '+ waypoint.name + '</li>');
 
 
-						for(var user in waypoint.users)
+						if(waypoint.users.length > 0)
+						{	
+
+
+							var _append = "<li>" + waypoint.name + "<li>";
+							_append += "<ul>";
+
+							for(var index in waypoint.users)
+							{
+
+								var user = waypoint.users[index];
+								_append += '<li style="list-style-type:none";>' + user + '</li>';
+
+							}
+
+							_append += "</ul>";
+
+							$("#waypoints").append(_append);
+
+							// $("#waypoints").append('');
+							
+							// var selected = waypoint._id;
+							// var uniqid = Date.now();
+							// console.log(uniqid);
+							// $("#" + selected).append("<ul id='" + uniqid + "'>");
+
+
+
+							// $("#"+uniqid).append('<li>test<li>');
+
+						
+
+
+							// $("#" + selected).append("</ul>");
+							// $("#waypoints").append('</li>');
+						}
+						else
 						{
-							var user = waypoint.users[user];
-							//alert(waypoint.name);
-							$("#users").append('<li> '+ user.name + '</li>');
-						}	
+							$("#waypoints").append('<li id="'+ waypoint._id +'">  '+ waypoint.name + '</li>');
+						}
 					}	
+
 				});
-
-
-
-
 				//race.waypoints.push({placeid: "ChI72o-0Zf1xkcRdF_M2RNO_KI", name: "Servex Geldermalsen", latitude: 51.882394, longitude: 5.286363});
 				$(document.body).on('click', '#waypoints li' ,function(){
 

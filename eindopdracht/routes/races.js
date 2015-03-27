@@ -168,9 +168,12 @@ module.exports = function(mongoose){
 
 		router.route('/:raceid/waypoint/:waypointid/user/:userid')
 		.post(function(req, res){
+
+
 			var raceid = req.params.raceid;
 			var userid = req.params.userid;
 			var waypointid = req.params.waypointid;
+
 			Race.findById(raceid, function(err, race) {
 			    if (err)
 			    {
@@ -178,10 +181,13 @@ module.exports = function(mongoose){
 			    }
 			    else
 			    {
+		
 			    	for (var i = 0; i<race.waypoints.length; i++) {
 				        var waypoint = race.waypoints[i];
+
 				        if(waypoint._id == waypointid)
 				        {
+	
 				        	waypoint.users.push(userid);
 				        	race.save(function(err) {
 							    if (err)
