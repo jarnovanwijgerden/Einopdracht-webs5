@@ -57,7 +57,7 @@
 
 			$("#btnlogout").on("click", function()
         	{
-        		localStorage.user = 'null'
+        		localStorage.user = null
         		window.location = "login";
 			});
 
@@ -106,25 +106,25 @@
 				//race.waypoints.push({placeid: "ChI72o-0Zf1xkcRdF_M2RNO_KI", name: "Servex Geldermalsen", latitude: 51.882394, longitude: 5.286363});
 				$(document.body).on('click', '#waypoints li' ,function(){
 
-					if(user != null)
-					{
+					// if(user != null)
+					// {
 
-						var waypointid = $(this).attr("id");
-						var _firstname ; 
-						var _middleName ;
-						var _age ;
-						var _admin ;
-						var _username ; 
-						var password ;
+					// 	var waypointid = $(this).attr("id");
+					// 	var _firstname ; 
+					// 	var _middleName ;
+					// 	var _age ;
+					// 	var _admin ;
+					// 	var _username ; 
+					// 	var password ;
 
-						race.waypoints.users.push({firstName: , middleName: , age: , admin: , username: , password});
-					}
-					else
-					{
-						alert("Je moet hiervoor ingelogd zijn. Je word nu doorverwezen naar de inlog pagina");
-						window.location = "login";
+					// 	race.waypoints.users.push({firstName: , middleName: , age: , admin: , username: , password});
+					// }
+					// else
+					// {
+					// 	alert("Je moet hiervoor ingelogd zijn. Je word nu doorverwezen naar de inlog pagina");
+					// 	window.location = "login";
 
-					}
+					// }
 					
 				});
 
