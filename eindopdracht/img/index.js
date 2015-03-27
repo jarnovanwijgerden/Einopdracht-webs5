@@ -14,9 +14,10 @@
 		});
 	}
 
-	function addUserToWaypoint(userid, raceid, callback)
+
+	function addUserToWaypoint(raceid,waypointid, userid, callback)
 	{
-		var url = "races/" + raceid + "/user/ " + userid;
+		var url = "races/" + raceid + "/waypoint/" + waypointid + "/user/" + userid;
 		$.post(url, function(response)
 		{
 			alert(response);
