@@ -9,9 +9,14 @@
 </head>
 <body>
 
+	<div align="right">
+	<button id="btnlogout" style="width:10%; margin-top:-10%">Uitloggen</button>
+	</div>
+
 	<h1 style="display:block; text-align:center;" >Inschrijf pagina</h1>
 	<p id="login" style="display:block; text-align:center;" > U bent ingelogd als </p>
   	<p align="center">Welkom op de Inschrijf pagina, hier kunt u uwzelf inschrijven voor een race en toevoegen aan waypoints</p>
+  	<p align="center">Je kunt jezelf toevoegen aan een waypoint door een race te selecteren en daarna op de waypoint te klikken</p>
 
 	<div align="center">
   	<label for="races" >race:</label>
@@ -20,6 +25,8 @@
 	</select>
 	<button id="btngo" style="width:10%">Toon details</button>
 	</div>
+
+
 
 	<div>
 		<ul id = "waypoints">
@@ -39,8 +46,20 @@
 		$(document).ready(function()
 		{
 
+
 			//check for user login
 			var user = JSON.parse(localStorage.getItem("user"));
+
+			if (user == null)
+			{
+				document.getElementById("btnlogout").childNodes[0].nodeValue= "Inloggen";
+			}
+
+			$("#btnlogout").on("click", function()
+        	{
+        		localStorage.user = 'null'
+        		window.location = "login";
+			});
 
 			if(user != null)
 				$("#login").append(user.fullName);
@@ -68,8 +87,9 @@
 					for(var point in response.waypoints)
 					{
 						var waypoint = response.waypoints[point];
-						//alert(waypoint.name);
-						$("#waypoints").append('<li> '+ waypoint.name + '</li>');
+				
+						$("#waypoints").append('<li id= " '+ waypoint.placeid +' ">  '+ waypoint.name + '</li>');
+
 
 						for(var user in waypoint.users)
 						{
@@ -77,10 +97,39 @@
 							//alert(waypoint.name);
 							$("#users").append('<li> '+ user.name + '</li>');
 						}	
-
 					}	
-
 				});
+
+
+
+
+				//race.waypoints.push({placeid: "ChI72o-0Zf1xkcRdF_M2RNO_KI", name: "Servex Geldermalsen", latitude: 51.882394, longitude: 5.286363});
+				$(document.body).on('click', '#waypoints li' ,function(){
+
+					if(user != null)
+					{
+
+						var waypointid = $(this).attr("id");
+						var _firstname ; 
+						var _middleName ;
+						var _age ;
+						var _admin ;
+						var _username ; 
+						var password ;
+
+						race.waypoints.users.push({firstName: , middleName: , age: , admin: , username: , password});
+					}
+					else
+					{
+						alert("Je moet hiervoor ingelogd zijn. Je word nu doorverwezen naar de inlog pagina");
+						window.location = "login";
+
+					}
+					
+				});
+
+
+
             });
 
 
