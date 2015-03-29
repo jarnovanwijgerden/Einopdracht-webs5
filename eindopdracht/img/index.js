@@ -20,6 +20,6 @@
 		var url = "races/" + raceid + "/waypoint/" + waypointid + "/user/" + userid;
 		$.post(url, function(response)
 		{
-			alert(response);
+			callback(response);
 		});
 	}

@@ -1,7 +1,16 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 var http = require('http'),
     fs = require('fs');
+LocalStrategy = require('passport-local').Strategy;
+
+
+
+var isAuthenticated = function (req, res, next) {
+  console.log("ZIjn we ingelogd?? " + req.user);
+    return next();
+}
 
 
 
@@ -42,7 +51,7 @@ router.get('/css/:cssfile', function(req, res, next) {
 	});
 });
 
-router.get('/management', function(req, res) {
+router.get('/management', isAuthenticated, function(req, res) {
 	fs.readFile('./website/management.html', function (err, html) {
 		if(err)
 		{

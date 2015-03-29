@@ -16,15 +16,21 @@ module.exports = function(passport, mongoose){
 	          res.json(users);
 	        }
 	      });
-
-		
 		});
+		
 	router.post('/login', passport.authenticate('local-login'),function(req, res) {
+		console.log("IS auth " + req.isAuthenticated());
 		res.send(req.user);
   	});
 	router.route('/signup')
 		.post(passport.authenticate('local-signup'), function(req, res) {
 	     res.send(req.user);
 	    });
+
+ 	router.post('/logout', function(req, res) {
+ 		console.log("User loguit");
+	  req.logout();
+	  res.redirect('/login');
+	});
 	return router;
 };

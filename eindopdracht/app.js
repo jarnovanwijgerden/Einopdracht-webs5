@@ -25,6 +25,9 @@ var passport = require('./config/passport')(userSchema);
 var routes = require('./routes/index');
 
 var users = require('./routes/users')(passport, mongoose);
+
+var maps = require('./routes/maps');
+
 var races = require('./routes/races')(mongoose);
 //var waypoints = require('./routes/waypoints')(mongoose);
 
@@ -43,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/races', races);
+app.use('/maps', maps);
 //app.use('/waypoints', waypoints);
 
 // catch 404 and forward to error handler
