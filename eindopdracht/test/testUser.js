@@ -26,5 +26,38 @@ describe('Test for authors routing', function(){
 					done();
 				})
 		});
+
+		it('Get races should return 5 users', function(done){
+			request(app)
+				.get('/users')
+				.expect(200)
+				.end(function(err, res){
+					if(err) { return done(err); }
+					expect(res.body).to.have.length(5);
+					done();
+				});
+		});
+
+		it('Get races should return a login', function(done){
+			request(app)
+				.get('/login')
+				.send({ username: 'jarno', password: 'jarno'})
+				.expect(200)
+				.end(function(err, res){
+					if(err) { return done(err); }
+					done();
+				});
+		});
+
+		it('Get races should return a register', function(done){
+			request(app)
+				.get('/register')
+				.send({firstName: 'Louis', middleName: '', lastName: 'Hol', age: 20, admin: true, username: "louis", password:"louis"})
+				.expect(200)
+				.end(function(err, res){
+					if(err) { return done(err); }
+					done();
+				});
+		});
 	});
 });
