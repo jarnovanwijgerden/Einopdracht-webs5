@@ -106,14 +106,6 @@ router.get('/register', function(req, res) {
 });
 
 
-
-
-
-
-
-
-
-
 router.get('/index', function(req, res) {
 	fs.readFile('./website/index.html', function (err, html) {
 		if(err)
