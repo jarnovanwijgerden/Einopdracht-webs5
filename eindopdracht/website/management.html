@@ -169,10 +169,8 @@
 
 		$("#btnsearch").on("click", function()
 		{
-			var _race = $("searchstatus").val();
-			var _status = $("searchnaam").val();
-
-			races/search/query=_race&_status
+			var _race = $("#searchnaam").val();
+			var _status = $("#searchstatus").val();
 
 			$.get("races/search/query="+ _race + "&" +_status, function(response)
           	{
