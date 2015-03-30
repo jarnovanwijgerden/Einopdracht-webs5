@@ -14,7 +14,7 @@ describe('Test for race routing', function(){
 	describe('Races', function(){
 		beforeEach(function(done){
 			testdata.fillTestdata(done);
-		});
+		}); 
 
 		it('Get races should return 200 status when getting races', function(done){
 			request(app)

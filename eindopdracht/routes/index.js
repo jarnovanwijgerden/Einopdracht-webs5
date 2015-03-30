@@ -14,6 +14,7 @@ var isAuth = function(req, res, next)
 var isAdmin = function(req, res, next)
 {
 	if(req.isAuthenticated() && req.user.admin)
+	//if(req.isAuthenticated())
 		return next();
 	res.redirect('/login');
 }

@@ -16,7 +16,7 @@ function fillUsers(done){
 		})
 	});
 };
-
+ 
 
 function fillRaces(done){
 	var Race = mongoose.model('Race');

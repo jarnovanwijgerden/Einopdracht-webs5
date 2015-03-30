@@ -7,7 +7,9 @@ module.exports = function(mongoose){
 	var isAdmin = function(req, res, next)
 	{
 		if(req.isAuthenticated() && req.user.admin)
+		//if(req.isAuthenticated())
 		{
+
 			return next();
 		}
 
