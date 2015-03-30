@@ -54,6 +54,34 @@ module.exports = function(mongoose){
 			    }
 		    });
 	    });
+
+	router.route('/search/:query')
+		.get(function(req, res) {
+
+			var query = req.params.query;
+			query = query.replace("query=", "");
+			var query = query.split("&");
+
+			var name = query[0];
+			var status = query[1];
+			Race
+			.find()
+			.where('name').equals(name)
+			.where('status').equals(status)
+			.exec(function (err, races) {
+
+				if (err)
+			    {
+					res.send(err);
+			    }
+			    else
+			    {
+			    	res.json(races);
+			    }
+
+			});
+		});
+
 	router.route('/:id')
 		.delete(isAdmin, function(req, res) {
 		  Race.findByIdAndRemove(req.params.id, function(err) {
