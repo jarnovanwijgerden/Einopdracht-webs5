@@ -27,7 +27,6 @@ router.get('/:lat/:lng', function(req, res, next) {
 
 function getJSON(options, onResult)
 {
-	console.log("rest::getJSON");
 	var req = http.request(options, function(res)
     {
         var output = '';

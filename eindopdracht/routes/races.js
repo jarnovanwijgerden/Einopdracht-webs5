@@ -7,7 +7,10 @@ module.exports = function(mongoose){
 	var isAdmin = function(req, res, next)
 	{
 		if(req.isAuthenticated() && req.user.admin)
+		{
 			return next();
+		}
+
 		res.status(401).send('Niet gemachtigd');
 	}
 	router.route('/')
@@ -24,13 +27,20 @@ module.exports = function(mongoose){
 			});
 		})
 		.post(isAdmin, function(req, res) {
+
 			var _race = new Race(req.body);
-			var waypoints = JSON.parse(req.body.way);
-			for(var index in waypoints)
+
+
+			if(req.body.way)
 			{
-				var way = waypoints[index];
-				_race.waypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude});
+				var waypoints = JSON.parse(req.body.way);
+				for(var index in waypoints)
+				{
+					var way = waypoints[index];
+					_race.waypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude});
+				}
 			}
+		
 			_race.save(function(err) {
 			    if (err)
 			    {
@@ -110,65 +120,65 @@ module.exports = function(mongoose){
 			    }
 			});
 		});
-		router.route('/:raceid/waypoint/:waypointid')
-		.delete(function(req, res) {
+		// router.route('/:raceid/waypoint/:waypointid')
+		// .delete(function(req, res) {
 
-			var raceid = req.params.raceid;
-			var waypointid = req.params.waypointid;
-			Race.findById(raceid, function(err, race) {
-			    if (err)
-			    {
-					res.send(err);
-			    }
-			    else
-			    {
-					 for (var i = 0; i<race.waypoints.length; i++) {
-				        var waypoint = race.waypoints[i];
-				        if(waypoint == waypointid)
-				        {
-				            race.waypoints.splice(i,1);
-				            break;
-				        }
-				    }
-				    race.save(function(err) {
-					    if (err)
-					    {
-					    	res.send(err);
-					    }
-					    else
-					    {
-					    	res.json(race);
-					    }
-			    	});
-				}
-			});
-		})
-		.post(function(req, res){
+		// 	var raceid = req.params.raceid;
+		// 	var waypointid = req.params.waypointid;
+		// 	Race.findById(raceid, function(err, race) {
+		// 	    if (err)
+		// 	    {
+		// 			res.send(err);
+		// 	    }
+		// 	    else
+		// 	    {
+		// 			 for (var i = 0; i<race.waypoints.length; i++) {
+		// 		        var waypoint = race.waypoints[i];
+		// 		        if(waypoint == waypointid)
+		// 		        {
+		// 		            race.waypoints.splice(i,1);
+		// 		            break;
+		// 		        }
+		// 		    }
+		// 		    race.save(function(err) {
+		// 			    if (err)
+		// 			    {
+		// 			    	res.send(err);
+		// 			    }
+		// 			    else
+		// 			    {
+		// 			    	res.json(race);
+		// 			    }
+		// 	    	});
+		// 		}
+		// 	});
+		// })
+		// .post(function(req, res){
 
-			var raceid = req.params.raceid;
-			var waypointid = req.params.waypointid;
+		// 	var raceid = req.params.raceid;
+		// 	var waypointid = req.params.waypointid;
 
-			Race.findById(raceid, function(err, race) {
-			    if (err)
-			    {
-					res.send(err);
-			    }
-			    else
-			    {
-			    	race.waypoints.push(waypointid);
-			    	race.save(function(err) {
-					    if (err)
-					    {
-					    	res.send(err);
-					    }
-					    else
-					    {
-					    	res.json(race);
-					    }
-			    	});
-			    }
-			});
-		});
+		// 	Race.findById(raceid, function(err, race) {
+		// 	    if (err)
+		// 	    {
+		// 			res.send(err);
+		// 	    }
+		// 	    else
+		// 	    {
+		// 	    	race.waypoints.push(waypointid);
+		// 	    	race.save(function(err) {
+		// 			    if (err)
+		// 			    {
+		// 			    	res.send(err);
+		// 			    }
+		// 			    else
+		// 			    {
+		// 			    	res.json(race);
+		// 			    }
+		// 	    	});
+		// 	    }
+		// 	});
+		// });
 
 		router.route('/:raceid/waypoint/:waypointid/user/:userid')
 		.post(function(req, res){
@@ -178,11 +188,8 @@ module.exports = function(mongoose){
 			var userid = req.params.userid;
 			var waypointid = req.params.waypointid;
 
-
-
 			Race.findById(raceid, function(err, race) {
 			
-
 			var alreadyExist = checkUserAlreadyOnWayPoint(race, waypointid, userid);
 			    if (err || alreadyExist)
 			    {
@@ -201,7 +208,7 @@ module.exports = function(mongoose){
 				        	race.save(function(err) {
 							    if (err)
 							    {
-							    	res.send("err");
+							    	res.status(300).send('err');
 							    }
 							    else
 							    {
