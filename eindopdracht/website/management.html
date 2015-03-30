@@ -29,6 +29,20 @@
 	      <li><a href="#four" data-ajax="false">Verwijderen</a></li>
 	    </ul>
 	  </div>
+
+	  <div id="search ">
+	  <h3>Zoek op een race</h3>
+	 	<p><input type="text" id="searchnaam" name="naam" value="" placeholder="Naam" style="width: 100%;"></p>
+	 	<select id="searchstatus" style="width: 100%;">
+        	<option value="Open">Open</option>
+        	<option value="Closed">Closed</option>
+        </select>
+        <br>
+        <br>
+	 	<button id="btnsearch" style="width: 100%;">Zoeken</button>
+
+
+	  </div>
 	  <div id="one" class="ui-body-d ui-content">
 	  	<h3>Lijst met alle races</h3>
 	    <ul id="listview" data-role="listview" data-inset="true">
@@ -152,6 +166,27 @@
 		{
 			saveRace();
 		});
+
+		$("#btnsearch").on("click", function()
+		{
+			var _race = $("searchstatus").val();
+			var _status = $("searchnaam").val();
+
+			races/search/query=_race&_status
+
+			$.get("races/search/query="+ _race + "&" +_status, function(response)
+          	{
+          		$("#listview").empty();
+          		for (var index in response)
+          		{
+          			var race = response[index];
+					$("#listview").append('<li class="' + race._id + '">' + race.name + ' - ' + race.description + ' <span style="float:right;"> Waypoints : ' + race.waypoints.length + ' |  Status : ' + race.status + '</span></li>');
+          		}
+          	});
+
+		});
+
+
 		$(document.body).on('click', '#waypoints li' ,function(){
 			$(this).remove();
 		});
