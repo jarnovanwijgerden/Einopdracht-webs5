@@ -5,20 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // Data Access Layer
+var session = require("express-session");
 var mongoose = require('./dataAccess/database')();
 // /Data Access Layer
 
 
 
 var app = express();
-var api = require('./API/api');
-
-
 
 var UserSchema = require('./models/user')(mongoose);
 var RaceSchema = require('./models/race')(mongoose);
 //var WaypointSchema = require('./models/Waypoint')(mongoose);
 
+//websocket
+var websocket = require('./websocket/websocket');
 
 var userSchema = mongoose.model("User");
 var passport = require('./config/passport')(userSchema);
@@ -35,18 +35,48 @@ var races = require('./routes/races')(mongoose);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+
+
+
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'Jarno en Louis',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.session());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/races', races);
 app.use('/maps', maps);
+
+
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(passport.initialize());
+// app.use(require('express-session')
+// ({
+//   secret: "keyboard cat",
+//   resave: false,
+//   saveUninitialized:false
+// }));
+
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(passport.session());
+// app.use('/', routes);
+// app.use('/users', users);
+// app.use('/races', races);
+// app.use('/maps', maps);
 //app.use('/waypoints', waypoints);
 
 // catch 404 and forward to error handler

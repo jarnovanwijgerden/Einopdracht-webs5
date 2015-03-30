@@ -4,16 +4,14 @@ var router = express.Router();
 module.exports = function(mongoose){
 
 	var Race =  mongoose.model('Race');
-
-	var isAdmin = function (req, res, next) {
-	  if (req.isAuthenticated() && req.user.admin)
-	    return next();
-	  res.redirect('/');
+	var isAdmin = function(req, res, next)
+	{
+		if(req.isAuthenticated() && req.user.admin)
+			return next();
+		res.status(401).send('Niet gemachtigd');
 	}
-
 	router.route('/')
 		.get(function(req, res) {
-			res.setHeader('Access-Control-Allow-Origin','*');
 			Race.find().populate('waypoints.users').exec(function (err, races) {
 				if (err)
 			    {
@@ -25,7 +23,7 @@ module.exports = function(mongoose){
 			    }
 			});
 		})
-		.post(function(req, res) {
+		.post(isAdmin, function(req, res) {
 			var _race = new Race(req.body);
 			var waypoints = JSON.parse(req.body.way);
 			for(var index in waypoints)
@@ -45,7 +43,7 @@ module.exports = function(mongoose){
 		    });
 	    });
 	router.route('/:id')
-		.delete(function(req, res) {
+		.delete(isAdmin, function(req, res) {
 		  Race.findByIdAndRemove(req.params.id, function(err) {
 		    if (err)
 		    {
@@ -70,7 +68,7 @@ module.exports = function(mongoose){
 			    }
 	      });
 		})
-		.put(function(req, res)
+		.put(isAdmin, function(req, res)
 		{ 
 			Race.findById(req.params.id, function(err, race) {
 			    if (err)
@@ -84,16 +82,21 @@ module.exports = function(mongoose){
 			    	race.description = _race.description;
 			    	race.startdatum = _race.startdatum;
 			    	race.status = _race.status;
-			    	race.users = _race.users;
 			 
 
 			  		var waypoints = JSON.parse(req.body.way);
-			  		race.waypoints = [];
+
+			  		var newwaypoints = [];
+			  		//race.waypoints = [];
 					for(var index in waypoints)
 					{
 						var way = waypoints[index];
-						race.waypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude});
+
+						var _users = syncUsersByWaypoint(way.waypoint, race.waypoints);
+						newwaypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude, users: _users});
 					}
+
+					race.waypoints = newwaypoints;
 			    	race.save(function(err) {
 				    if (err)
 				    {
@@ -107,7 +110,6 @@ module.exports = function(mongoose){
 			    }
 			});
 		});
-
 		router.route('/:raceid/waypoint/:waypointid')
 		.delete(function(req, res) {
 
@@ -176,10 +178,15 @@ module.exports = function(mongoose){
 			var userid = req.params.userid;
 			var waypointid = req.params.waypointid;
 
+
+
 			Race.findById(raceid, function(err, race) {
-			    if (err)
+			
+
+			var alreadyExist = checkUserAlreadyOnWayPoint(race, waypointid, userid);
+			    if (err || alreadyExist)
 			    {
-					res.send(err);
+					res.send("err");
 			    }
 			    else
 			    {
@@ -189,12 +196,12 @@ module.exports = function(mongoose){
 
 				        if(waypoint._id == waypointid)
 				        {
-	
+
 				        	waypoint.users.push(userid);
 				        	race.save(function(err) {
 							    if (err)
 							    {
-							    	res.send(err);
+							    	res.send("err");
 							    }
 							    else
 							    {
@@ -231,7 +238,7 @@ module.exports = function(mongoose){
 				    race.save(function(err) {
 					    if (err)
 					    {
-					    	res.send(err);
+					    	res.send("err");
 					    }
 					    else
 					    {
@@ -267,5 +274,38 @@ module.exports = function(mongoose){
 			    }
 			});
 		});
+		function checkUserAlreadyOnWayPoint(race, waypointid, userid)
+		{
+
+			for (var i = 0; i<race.waypoints.length; i++) {
+		        var waypoint = race.waypoints[i];
+		        if(waypoint._id == waypointid)
+		        {
+
+			        for (var index = 0; index < waypoint.users.length; index++) {
+
+			        		var user = waypoint.users[index];
+
+			        		if(user == userid)
+			        		{
+			        			return true;
+			        		}
+			        	}
+		     	}
+		    }
+		    return false;
+		}
+		function syncUsersByWaypoint(waypointid, waypoints)
+		{
+			for(var way in waypoints)
+			{
+				var waypoint = waypoints[way];
+				if(waypoint._id == waypointid && waypointid != null)
+				{
+					return waypoint.users;
+				}
+			}
+			return [];
+		}
 	return router;
 };

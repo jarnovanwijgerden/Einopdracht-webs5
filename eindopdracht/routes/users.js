@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+
+
+
 module.exports = function(passport, mongoose){
 	router.route('/')
 		.get(function(req, res, next) {
@@ -24,6 +27,7 @@ module.exports = function(passport, mongoose){
   	});
 	router.route('/signup')
 		.post(passport.authenticate('local-signup'), function(req, res) {
+		console.log("Hij komt er");
 	     res.send(req.user);
 	    });
 

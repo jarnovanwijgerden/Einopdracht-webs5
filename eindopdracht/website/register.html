@@ -46,6 +46,7 @@
           var _password = $("#password").val();
           $.post("users/signup", { firstName: _firstname,  middleName: _middleName,  lastName: _lastName,  age: _age,  username: _username, password: _password, admin: false}, function(response)
           {
+
             if(response._id != null)
             {
               localStorage.setItem("user", JSON.stringify(response)); 

@@ -5,14 +5,18 @@ var http = require('http'),
     fs = require('fs');
 LocalStrategy = require('passport-local').Strategy;
 
-
-
-var isAuthenticated = function (req, res, next) {
-  console.log("ZIjn we ingelogd?? " + req.user);
-    return next();
+var isAuth = function(req, res, next)
+{
+	if(req.isAuthenticated())
+		return next();
+	res.redirect('/login');
 }
-
-
+var isAdmin = function(req, res, next)
+{
+	if(req.isAuthenticated() && req.user.admin)
+		return next();
+	res.redirect('/login');
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -51,7 +55,7 @@ router.get('/css/:cssfile', function(req, res, next) {
 	});
 });
 
-router.get('/management', isAuthenticated, function(req, res) {
+router.get('/management', isAdmin, function(req, res) {
 	fs.readFile('./website/management.html', function (err, html) {
 		if(err)
 		{

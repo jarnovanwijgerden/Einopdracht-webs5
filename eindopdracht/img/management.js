@@ -76,7 +76,7 @@
 	{
 		$("#resultpoints").empty();
 		var geo = GEO.lat() + "," + GEO.lng();
-		var URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyBiRwy-lPEwPJkfOOG0XPpeT_OCG88Ust8&location="+ geo + "&radius=5000&type=cafe";
+		var URI = "maps/" + GEO.lat() + "/" + GEO.lng();
 		getJSONFromURL(URI, function(response)
 		{
 			for(var race in response.results)
@@ -145,8 +145,9 @@
 			var _placeid = point.attr("place-id");
 			var _lng = point.attr("lng");
 			var _lat = point.attr("lat");
+			var waypointid = point.attr("way-id");
 
-			_waypoints.push({placeid: _placeid, name: _name, latitude: _lat, longitude: _lng});
+			_waypoints.push({placeid: _placeid, name: _name, latitude: _lat, longitude: _lng, waypoint: waypointid});
 		});
 
 		var _name = $("#editracename").val();

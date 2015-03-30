@@ -57,8 +57,6 @@ var init = function(User) {
                     // set the user's local credentials
                     newUser.local.username    = username;
                     newUser.local.password = newUser.generateHash(password);
-
-                    console.log("IK PROBEER TE SAVEN");
                     // save the user
                     newUser.save(function(err) {
                         if (err)
