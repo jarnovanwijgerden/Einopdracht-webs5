@@ -1,8 +1,6 @@
-var mongoose = require('mongoose');
-
-module.exports = function(){
-
-		var uri = 'mongodb://localhost:27017/eindopdracht';
-		mongoose.connect(uri);
-	return mongoose;
-}
+module.exports = {
+	db: {
+		dev: 'mongodb://localhost:27017/eindopdracht',
+		test: 'mongodb://localhost:27017/eindopdracht_test'
+	}
+};

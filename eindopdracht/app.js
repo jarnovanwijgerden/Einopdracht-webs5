@@ -6,12 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // Data Access Layer
 var session = require("express-session");
-var mongoose = require('./dataAccess/database')();
+
+var mongoose = require('mongoose');
+
+var config = require('./dataAccess/database');
 // /Data Access Layer
-
-
-
 var app = express();
+
+var connectionString;
+switch(app.get('env')) {
+    case 'test': connectionString = config.db.test;
+        console.log("Connectie gemaakt met de test Database");
+        break;
+    default: connectionString = config.db.dev;
+}
+mongoose.connect(connectionString);
 
 var UserSchema = require('./models/user')(mongoose);
 var RaceSchema = require('./models/race')(mongoose);
