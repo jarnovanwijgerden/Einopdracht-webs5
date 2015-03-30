@@ -24,8 +24,9 @@ function fillRaces(done){
 		async.parallel([
 			function(cb) 
 			{ 
-				var way = [{ placeid: "ChIJR10vFTJfxkcRaYKiRpR6sqY", name: "De Kletskop", latitude: "51.877266", longitude: "5.288234", waypoints: way}];
-				new Race({name: 'Race 1', description: 'Leuke race 1', startdatum: '2015-10-10', status: "Open"}).save(cb); 
+				var way = [{ placeid: "ChIJR10vFTJfxkcRaYKiRpR6sqY", name: "De Kletskop", latitude: "51.877266", longitude: "5.288234" }];
+
+				new Race({name: 'Race 1', description: 'Leuke race 1', startdatum: '2015-10-10', status: "Open", waypoints: way}).save(cb); 
 			},
 			function(cb) { new Race({name: 'Race 2', description: 'Leuke race 2', startdatum: '2015-10-09', status: "Open"}).save(cb); },
 			function(cb) { new Race({name: 'Race 3', description: 'Leuke race 3', startdatum: '2015-10-08', status: "Closed"}).save(cb); },
@@ -38,6 +39,8 @@ function fillRaces(done){
 		})
 	});
 };
+
+
 
 module.exports = {
 	fillTestdata: function(done){

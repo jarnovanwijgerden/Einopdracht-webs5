@@ -123,10 +123,92 @@ describe('Test for race routing', function(){
 			 });
 		});
 
-		
+		it('Add user to waypoint should return 200 status (succes) ', function(done){
 
+			RaceSchema.findOne({name: 'Race 1'}, function(err,race) {
+				
+				//console.log("DIT IS DE RACE " + JSON.stringify(race));
+				var waypointid = race.waypoints[0]._id;
+				var raceid = race._id;
 
+				UserSchema.findOne({firstName: 'Louis'}, function(err,user) { 
 
+					var userid = user._id;
+					request(app)
+						.post('/races/'+raceid+'/waypoint/'+waypointid+"/user/"+userid)
+						.expect(200)
+						.end(function(err, res){
+							if(err) { return done(err); }
+							done();
+						});
+				});
+			});
+		});
+
+		it('Add user to race should return 1 user', function(done){
+
+			RaceSchema.findOne({name: 'Race 1'}, function(err,race) {
+				var raceid = race._id;
+				UserSchema.findOne({firstName: 'Louis'}, function(err,user) { 
+					var userid = user._id;
+					request(app)
+						.post('/races/'+raceid+'/user/'+userid)
+						.expect(200)
+						.end(function(err, res){
+							if(err) { return done(err); }
+							expect(res.body.users).to.have.length(1);
+							done();
+						});
+
+				});
+
+			});
+		});
+
+		it('Remove user from race, users should return length 0', function(done){
+
+			RaceSchema.findOne({name: 'Race 2'}, function(err,race) {
+				UserSchema.findOne({firstName: 'Louis'}, function(err,user) { 
+					var userid = user._id;
+					race.users.push(userid);
+					race.save();
+						request(app)
+						.delete('/races/'+race._id+'/user/'+userid)
+						.expect(200)
+						.end(function(err, res){
+							if(err) { return done(err); }
+							expect(res.body.users).to.have.length(0);
+							done();
+						});
+				});
+			});
+		});
+
+		it('Should edit race name from race 1 to race 11', function(done){
+
+			RaceSchema.findOne({name: 'Race 1'}, function(err,race) {
+			
+
+				var _name = "Race11";
+				var _description = "Nieuwe beschrijving";
+				var _status = "Closed";
+				var _startdatum = "2015-10-10";
+
+				var _way = [{ placeid: "ChIJR10vFTJfxkcRaYKiRpR6sqY", name: "De Kletskop", latitude: "51.877266", longitude: "5.288234" }];
+				var json = JSON.stringify(_way);
+
+				request(app)
+						.put('/races/'+race._id)
+						.send({ name: _name, description: _description, startdatum: _startdatum, status: _status, way: json})
+						.expect(200)
+						.end(function(err, res){
+							if(err) { return done(err); }
+							expect("Race11", res.body.name);
+							expect(res.body.waypoints).to.have.length(1);
+							done();
+						});
+			});
+		});
 
 	});
 });

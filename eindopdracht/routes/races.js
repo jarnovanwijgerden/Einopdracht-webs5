@@ -94,20 +94,22 @@ module.exports = function(mongoose){
 			    	race.description = _race.description;
 			    	race.startdatum = _race.startdatum;
 			    	race.status = _race.status;
-			 
+			 		var newwaypoints = [];
+			 		if(req.body.way)
+			 		{
+			 		
+						var waypoints = JSON.parse(req.body.way);
+				  		//race.waypoints = [];
+						for(var index in waypoints)
+						{
+							var way = waypoints[index];
 
-			  		var waypoints = JSON.parse(req.body.way);
+							var _users = syncUsersByWaypoint(way.waypoint, race.waypoints);
+							newwaypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude, users: _users});
+						}
 
-			  		var newwaypoints = [];
-			  		//race.waypoints = [];
-					for(var index in waypoints)
-					{
-						var way = waypoints[index];
-
-						var _users = syncUsersByWaypoint(way.waypoint, race.waypoints);
-						newwaypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude, users: _users});
-					}
-
+			 		}
+			  		
 					race.waypoints = newwaypoints;
 			    	race.save(function(err) {
 				    if (err)

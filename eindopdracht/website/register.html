@@ -22,6 +22,7 @@
         <p><input type="text" id="age" name="age" value="" placeholder="Leeftijd"></p>
         <p><input type="text" id="username" name="username" value="" placeholder="username"></p>
         <p><input type="password" id="password" name="password" value="" placeholder="Wachtwoord"></p>
+        <p><input type="checkbox" id="admin" name="admin" value="admin">Admin</p><br>
         <button id="btnregister">Registeer</button>
     </div>
 
@@ -44,7 +45,10 @@
           var _age = $("#age").val();
           var _username = $("#username").val();
           var _password = $("#password").val();
-          $.post("users/signup", { firstName: _firstname,  middleName: _middleName,  lastName: _lastName,  age: _age,  username: _username, password: _password, admin: false}, function(response)
+
+          var _admin = $('#admin').is(":checked")
+
+          $.post("users/signup", { firstName: _firstname,  middleName: _middleName,  lastName: _lastName,  age: _age,  username: _username, password: _password, admin: _admin}, function(response)
           {
 
             if(response._id != null)
