@@ -144,7 +144,12 @@
 		{
 			for(var race in races)
 			{
-				$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;">Winnaar : ' + races[race].winner.fullName +' | Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
+				var winner = "Geen";
+				if(races[race].winner != null)
+					winner = races[race].winner.fullName;
+
+
+				$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;">Winnaar : ' + winner +' | Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
 				$("#listviewremove").append('<li data-icon="false"><a class="' + races[race]._id + '" id="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
 				$("#races").append('<option value="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
 			}
