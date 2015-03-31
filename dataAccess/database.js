@@ -1,6 +1,6 @@
 module.exports = {
 	db: {
-		dev: 'mongodb://localhost:27017/eindopdracht',
-		test: 'mongodb://localhost:27017/eindopdracht_test'
+		dev: ' mongodb://admin:admin@ds041377.mongolab.com:41377/eindopdracht',
+		test: 'mongodb://admin:admin@ds041377.mongolab.com:41377/eindopdracht'
 	}
-};
+};  
