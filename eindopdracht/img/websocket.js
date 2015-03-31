@@ -3,7 +3,7 @@ window.WebSocket = window.WebSocket || window.MozWebSocket;
  if (!window.WebSocket) {
        alert("Deze browser wordt niet ondersteunt");
  }
-var connection = new WebSocket("ws://"+window.location.hostname+":1337");
+var connection = new WebSocket("ws://"+window.location.hostname+":4000");
 console.log("In WebSocket");
 
 connection.onopen = function () {

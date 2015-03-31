@@ -145,6 +145,28 @@ describe('Test for race routing', function(){
 			});
 		});
 
+		it('Add user to wrong waypoint should return 400 status (Bad Request) ', function(done){
+
+			RaceSchema.findOne({name: 'Race 1'}, function(err,race) {
+				
+				//console.log("DIT IS DE RACE " + JSON.stringify(race));
+				var waypointid = race.waypoints[1]._id;
+				var raceid = race._id;
+
+				UserSchema.findOne({firstName: 'Louis'}, function(err,user) { 
+
+					var userid = user._id;
+					request(app)
+						.post('/races/'+raceid+'/waypoint/'+waypointid+"/user/"+userid)
+						.expect(400)
+						.end(function(err, res){
+							if(err) { return done(err); }
+							done();
+						});
+				});
+			});
+		});
+
 		it('Add user to race should return 1 user', function(done){
 
 			RaceSchema.findOne({name: 'Race 1'}, function(err,race) {

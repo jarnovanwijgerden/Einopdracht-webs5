@@ -24,7 +24,11 @@ function fillRaces(done){
 		async.parallel([
 			function(cb) 
 			{ 
-				var way = [{ placeid: "ChIJR10vFTJfxkcRaYKiRpR6sqY", name: "De Kletskop", latitude: "51.877266", longitude: "5.288234" }];
+				var way = 
+				[
+					{ placeid: "ChIJR10vFTJfxkcRaYKiRpR6sqY", name: "De Kletskop", latitude: "51.877266", longitude: "5.288234" },
+					{ placeid: "SKJdhksd271414HDSGDHJSsdasd", name: "Louis hol Cafe", latitude: "52.52114", longitude: "5.133445" }
+				];
 
 				new Race({name: 'Race 1', description: 'Leuke race 1', startdatum: '2015-10-10', status: "Open", waypoints: way}).save(cb); 
 			},

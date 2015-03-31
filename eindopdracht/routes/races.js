@@ -162,14 +162,15 @@ module.exports = function(mongoose){
 
 			Race.findById(raceid, function(err, race) {
 			
+			var allowed = checkIfUserIsOnPreviousWayPoints(race, waypointid, userid);
 			var alreadyExist = checkUserAlreadyOnWayPoint(race, waypointid, userid);
-			    if (err || alreadyExist)
+			    if (err || alreadyExist || allowed == false)
 			    {
-					res.send("err");
+					res.status(400).send('err');
 			    }
 			    else
 			    {
-		
+	
 			    	for (var i = 0; i<race.waypoints.length; i++) {
 				        var waypoint = race.waypoints[i];
 
@@ -274,6 +275,20 @@ module.exports = function(mongoose){
 		    }
 		    return false;
 		}
+		function checkUserOnWaypoint(waypoint, userid)
+		{
+
+			for(var index in waypoint.users)
+			{
+				var user = waypoint.users[index];
+				if(user == userid)
+				{
+					return true;
+				}
+			}
+			return false;
+
+		}
 		function syncUsersByWaypoint(waypointid, waypoints)
 		{
 			for(var way in waypoints)
@@ -286,5 +301,29 @@ module.exports = function(mongoose){
 			}
 			return [];
 		}
+		function checkIfUserIsOnPreviousWayPoints(race, waypointid, userid)
+		{
+
+			var check = true;
+			for(var index in race.waypoints)
+			{
+				var waypoint = race.waypoints[index];
+
+				if(waypoint._id == waypointid)
+				{
+					for(var i=0; i<index; i++)
+					{
+			
+						var onpoint = checkUserOnWaypoint(race.waypoints[i], userid);
+						if(onpoint == false)
+						{
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+
 	return router;
 };
