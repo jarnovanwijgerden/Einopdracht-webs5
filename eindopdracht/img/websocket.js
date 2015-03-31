@@ -19,13 +19,17 @@ connection.onmessage = function (message) {
 	var race = json.data.race;
 	var user = json.data.user;
 	var waypoint = json.data.waypoint;
+	var winner = json.data.winner;
 	
 	var raceid = $("#races").val();
 	if(raceid == race)
 	{
 		$("#"+waypoint).append("<li>" + user + "</li>");
+		if(winner != null)
+		{
+			alert("Er heeft zojuist iemand de race gewonnen, van harte gefeliciteerd " + winner);
+		}
 	}
-
 };
 
 function sendMessageToClients(message)

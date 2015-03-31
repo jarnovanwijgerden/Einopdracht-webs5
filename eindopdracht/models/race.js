@@ -14,7 +14,8 @@ init = function(mongoos){
 					latitude: {type:Number, required:true },
 					longitude: {type:Number, required:true },
 					users: [ {type : mongoos.Schema.ObjectId, ref : 'User'} ]
-			}]
+			}],
+			winner: {type : mongoos.Schema.ObjectId, ref : 'User'}
 		});
 		raceSchema.path('startdatum').validate(function (value) {
 			  return value >= Date.now();

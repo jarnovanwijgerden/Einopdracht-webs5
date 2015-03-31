@@ -30,24 +30,26 @@
 	    </ul>
 	  </div>
 
-	  <div id="search ">
-	  <h3>Zoek op een race</h3>
-	 	<p><input type="text" id="searchnaam" name="naam" value="" placeholder="Naam" style="width: 100%;"></p>
-	 	<select id="searchstatus" style="width: 100%;">
-        	<option value="Open">Open</option>
-        	<option value="Closed">Closed</option>
-        </select>
-        <br>
-        <br>
-	 	<button id="btnsearch" style="width: 100%;">Zoeken</button>
 
-
-	  </div>
 	  <div id="one" class="ui-body-d ui-content">
+
+	  	<div id="search ">
+		  <h3>Zoek op een race</h3>
+		 	<p><input type="text" id="searchnaam" name="naam" value="" placeholder="Naam" style="width: 100%;"></p>
+		 	<select id="searchstatus" style="width: 100%;">
+	        	<option value="Open">Open</option>
+	        	<option value="Closed">Closed</option>
+	        </select>
+	        <br>
+	        <br>
+		 	<button id="btnsearch" style="width: 100%;">Zoeken</button>
+	  </div>
+
 	  	<h3>Lijst met alle races</h3>
 	    <ul id="listview" data-role="listview" data-inset="true">
 	       
 	    </ul>
+
 	  </div>
 	  <div id="two">
 	    <p><input type="text" id="racename" name="name" value="" placeholder="Naam"></p>
@@ -142,7 +144,7 @@
 		{
 			for(var race in races)
 			{
-				$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
+				$("#listview").append('<li class="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;">Winnaar : ' + races[race].winner.fullName +' | Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></li>');
 				$("#listviewremove").append('<li data-icon="false"><a class="' + races[race]._id + '" id="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + ' <span style="float:right;"> Waypoints : ' + races[race].waypoints.length + ' |  Status : ' + races[race].status + '</span></a></li>');
 				$("#races").append('<option value="' + races[race]._id + '">' + races[race].name + ' - ' + races[race].description + '.</option>');
 			}

@@ -103,13 +103,21 @@
 					var waypointid = $(this).attr("data-id");
 					var raceid = $("#races").val();
 					var userid = user._id;
-					addUserToWaypoint(raceid,waypointid, userid, function(data)
+					addUserToWaypoint(raceid,waypointid, userid, function(response)
 					{
-						if(data != "err")
+						console.log(response);
+						if(response != "err")
 						{
-							var message = {"race": raceid, "user": user.fullName, "waypoint": waypointid};
-							sendMessageToClients(JSON.stringify(message));
-							
+
+							if(response.winner == false)
+							{
+								var message = {"race": raceid, "user": user.fullName, "waypoint": waypointid};
+								sendMessageToClients(JSON.stringify(message));
+							} else {
+								var message = {"race": raceid, "user": user.fullName, "waypoint": waypointid, "winner": user.fullName};
+								sendMessageToClients(JSON.stringify(message));
+							}	
+		
 						}
 					});
 				}
@@ -117,7 +125,6 @@
 				{
 					alert("Je moet hiervoor ingelogd zijn. Je word nu doorverwezen naar de inlog pagina");
 					window.location = "login";
-
 				}
 				
 			});

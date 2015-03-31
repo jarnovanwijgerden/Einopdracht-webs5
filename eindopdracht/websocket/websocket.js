@@ -36,13 +36,16 @@ var index = clients.push(connection) - 1;
 console.log("Nieuwe connectie, aantal connecites zijn :" + clients.length);
 // user sent some message
 connection.on('message', function(message) {
+    console.log(message);
     var _message  = JSON.parse(message.utf8Data);
     var obj = 
     {
         race: _message.race,
         user: _message.user,
-        waypoint: _message.waypoint
-    }
+        waypoint: _message.waypoint,
+        winner: _message.winner
+    };
+
     var json = JSON.stringify({ type:'message', data: obj });
     for (var i=0; i < clients.length; i++) {
         clients[i].sendUTF(json);

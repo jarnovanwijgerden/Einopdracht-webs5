@@ -7,17 +7,14 @@ module.exports = function(mongoose){
 	var isAdmin = function(req, res, next)
 	{
 		if(req.isAuthenticated() && req.user.admin)
-		//if(req.isAuthenticated())
 		{
-
 			return next();
 		}
-
 		res.status(401).send('Niet gemachtigd');
 	}
 	router.route('/')
 		.get(function(req, res) {
-			Race.find().populate('waypoints.users').exec(function (err, races) {
+			Race.find().populate('waypoints.users winner').exec(function (err, races) {
 				if (err)
 			    {
 					res.send(err);
@@ -131,7 +128,6 @@ module.exports = function(mongoose){
 						for(var index in waypoints)
 						{
 							var way = waypoints[index];
-
 							var _users = syncUsersByWaypoint(way.waypoint, race.waypoints);
 							newwaypoints.push({placeid: way.placeid, name: way.name, latitude: way.latitude, longitude: way.longitude, users: _users});
 						}
@@ -159,8 +155,7 @@ module.exports = function(mongoose){
 			var raceid = req.params.raceid;
 			var userid = req.params.userid;
 			var waypointid = req.params.waypointid;
-
-			Race.findById(raceid, function(err, race) {
+			Race.findById(raceid).populate('winner').exec(function (err, race) {
 			
 			var allowed = checkIfUserIsOnPreviousWayPoints(race, waypointid, userid);
 			var alreadyExist = checkUserAlreadyOnWayPoint(race, waypointid, userid);
@@ -170,14 +165,19 @@ module.exports = function(mongoose){
 			    }
 			    else
 			    {
-	
+					var _json =  { data: race, winner:false };
 			    	for (var i = 0; i<race.waypoints.length; i++) {
 				        var waypoint = race.waypoints[i];
 
 				        if(waypoint._id == waypointid)
 				        {
-
 				        	waypoint.users.push(userid);
+
+				        	if(checkWinnerOnWayPoint(i, race))
+				        	{
+				        		race.winner = userid;
+				        		_json.winner = true;
+				        	}
 				        	race.save(function(err) {
 							    if (err)
 							    {
@@ -185,7 +185,7 @@ module.exports = function(mongoose){
 							    }
 							    else
 							    {
-							    	res.json(race);
+							    	res.json(_json);
 							    }
 				    		});	
 				            break;
@@ -324,6 +324,16 @@ module.exports = function(mongoose){
 			}
 			return true;
 		}
-
+		function checkWinnerOnWayPoint(index, race)
+		{
+			if(index == race.waypoints.length -1)
+			{
+				if(race.waypoints[index].users.length == 1)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	return router;
 };
