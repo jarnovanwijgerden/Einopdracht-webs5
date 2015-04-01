@@ -1,25 +1,16 @@
-var connection
+var socket;
 window.addEventListener("load", function () {
+	
+		socket = io();
+		socket.on('checkin', function(msg){
 
-		connection = new WebSocket("ws://"+window.location.hostname)
-		connection.onopen = function () {
-			alert("Connectie open");
-		 }
-
-		connection.onclose = function () {
-			console.log("Connection closed")
-		}
-		connection.onerror = function () {
-			console.error("Connection error")
-		}
-		connection.onmessage = function (evt) {
-			alert("Message binnen gekregen " + JSON.stringify(evt));
-			var json = JSON.parse(evt.data);
-			var race = json.data.race;
-			var user = json.data.user;
-			var waypoint = json.data.waypoint;
-			var winner = json.data.winner;
+			var json = JSON.parse(msg);
+			var race = json.race;
+			var user = json.user;
+			var waypoint = json.waypoint;
+			var winner = json.winner;
 			var raceid = $("#races").val();
+
 			if(raceid == race)
 			{
 				$("#"+waypoint).append("<li>" + user + "</li>");
@@ -28,11 +19,10 @@ window.addEventListener("load", function () {
 					alert("Er heeft zojuist iemand de race gewonnen, van harte gefeliciteerd " + winner);
 				}
 			}
-		}
+		});
 		
 });
 function sendMessageToClients(message)
 {
-	alert("message naar server verstuurd");
-	 connection.send(message);
+	socket.emit('checkin', message);
 }
