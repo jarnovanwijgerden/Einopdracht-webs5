@@ -19,10 +19,7 @@ var isAdmin = function(req, res, next)
 	res.redirect('/login');
 }
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+
 
 router.get('/js/:jsfile', function(req, res, next) {
 
@@ -106,7 +103,7 @@ router.get('/register', function(req, res) {
 });
 
 
-router.get('/index', function(req, res) {
+router.get('/', function(req, res) {
 	fs.readFile('./website/index.html', function (err, html) {
 		if(err)
 		{

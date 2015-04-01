@@ -1,8 +1,10 @@
 var connection
 window.addEventListener("load", function () {
 
-		connection = new WebSocket("ws://"+window.location.hostname+":8081")
-		connection.onopen = function () { }
+		connection = new WebSocket("ws://"+window.location.hostname+":443")
+		connection.onopen = function () {
+			alert("Connectie open");
+		 }
 
 		connection.onclose = function () {
 			console.log("Connection closed")
@@ -11,6 +13,7 @@ window.addEventListener("load", function () {
 			console.error("Connection error")
 		}
 		connection.onmessage = function (evt) {
+			alert("Message binnen gekregen");
 			var json = JSON.parse(evt.data);
 			var race = json.data.race;
 			var user = json.data.user;
@@ -30,5 +33,6 @@ window.addEventListener("load", function () {
 });
 function sendMessageToClients(message)
 {
+	alert("message naar server verstuurd");
 	 connection.send(message);
 }
