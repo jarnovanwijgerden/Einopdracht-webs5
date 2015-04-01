@@ -1,7 +1,7 @@
 var connection
 window.addEventListener("load", function () {
 
-		connection = new WebSocket("ws://"+window.location.hostname+":443")
+		connection = new WebSocket("ws://"+window.location.hostname+":5500")
 		connection.onopen = function () {
 			alert("Connectie open");
 		 }
@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
 			console.error("Connection error")
 		}
 		connection.onmessage = function (evt) {
-			alert("Message binnen gekregen");
+			alert("Message binnen gekregen " + JSON.stringify(evt));
 			var json = JSON.parse(evt.data);
 			var race = json.data.race;
 			var user = json.data.user;

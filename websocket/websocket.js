@@ -1,12 +1,15 @@
 
 var http = require("http");
-var ws = require("nodejs-websocket");
+var ws = require("nodejs-websocket")
 var fs = require("fs");
-console.log("Websocket wordt aangegooid");
+
 
 var server = ws.createServer(function (connection) {
     console.log("Er is een nieuwe verbinding");
     connection.on("text", function (str) {
+
+
+    console.log("Nieuwe message");
     var _message  = JSON.parse(str);
     var obj = 
     {
@@ -23,7 +26,7 @@ var server = ws.createServer(function (connection) {
 
     })
 })
-server.listen(443)
+server.listen(5500)
 
 function broadcast(str) {
     server.connections.forEach(function (connection) {
