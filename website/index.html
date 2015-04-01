@@ -8,9 +8,9 @@
 	  	<link rel="stylesheet" href="css/style.css">
 	  	<script src="js/websocket.js"></script>
 	  
-</head>
+</head>                    
 <body>
-
+          
 	<div align="right">
 		<button id="btnmanagemant" style="width:10%; margin-top:-10%">managemant</button>
 		<button id="btnlogout" style="width:10%; margin-top:-10%">Uitloggen</button>
@@ -58,7 +58,7 @@
 			$("#btnmanagemant").on("click", function()
         	{
         		window.location = "management";
-			});
+			});        
 
 			if(user != null)
 				$("#login").append(user.fullName);
