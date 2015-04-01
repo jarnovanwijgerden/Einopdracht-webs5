@@ -26,7 +26,7 @@ var server = ws.createServer(function (connection) {
 
     })
 })
-server.listen(5500)
+server.listen(5000)
 
 function broadcast(str) {
     server.connections.forEach(function (connection) {
