@@ -1,7 +1,7 @@
 var connection
 window.addEventListener("load", function () {
 
-		connection = new WebSocket("ws://"+window.location.hostname+":5500")
+		connection = new WebSocket("ws://"+window.location.hostname+":5000")
 		connection.onopen = function () {
 			alert("Connectie open");
 		 }
